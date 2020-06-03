@@ -7,34 +7,44 @@
         mc:Ignorable="d"
         Title="Postcard Generator" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*"/>
-            <ColumnDefinition Width="239*"/>
-        </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="792" Grid.ColumnSpan="2">
             <TabItem Header="Work" Name="designTab">
                 <Grid Background="Beige">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="137*"/>
+                        <RowDefinition Height="251*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="489*"/>
                         <ColumnDefinition Width="293*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Name="InputBox" FontSize="20" BorderThickness="2" BorderBrush="Black" AcceptsTab="true" AcceptsReturn="True" HorizontalAlignment="Left" Height="368" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="478" Margin="10,10,0,0"/>
-                    <TextBox Name="InputBox1" FontSize="20" BorderThickness="2" BorderBrush="Black" AcceptsTab="true" AcceptsReturn="True" Grid.Column="1" HorizontalAlignment="Left" Height="215" Margin="19,163,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="264"/>
-                    <Image Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="174,10,0,0" VerticalAlignment="Top" Width="100"/>
-                    <Button Name="addText" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="14,10,0,0" VerticalAlignment="Top" Width="75" Click="addText_Click" Height="22"/>
-                    <Menu Grid.Column="1" HorizontalAlignment="Left" Height="65" Margin="14,37,0,0" VerticalAlignment="Top" Width="75">
-                        <TabItem Content="text" Height="20" Width="61"/>
+                    <TextBox Name="InputBox" FontSize="20" BorderThickness="2" BorderBrush="Black" AcceptsTab="true" AcceptsReturn="True" HorizontalAlignment="Left" Height="368" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="478" Margin="10,10,0,0" Grid.RowSpan="2" SpellCheck.IsEnabled="True"/>
+                    <TextBox Name="InputBox1" FontSize="20" BorderThickness="2" BorderBrush="Black" AcceptsTab="true" AcceptsReturn="True" Grid.Column="1" HorizontalAlignment="Left" Height="215" Margin="19,25.888,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="264" Grid.Row="1" TextDecorations="Underline" SpellCheck.IsEnabled="True"/>
+                    <Button Name="addText" Content="Add Text" Grid.Column="1" HorizontalAlignment="Left" Margin="14,10,0,0" VerticalAlignment="Top" Width="75" Click="AddText_Click" Height="22"/>
+                    <Menu Grid.Column="1" HorizontalAlignment="Left" Height="45" Margin="14,37,0,0" VerticalAlignment="Top" Width="75">
+                        <MenuItem Header="Fonts" Height="23" Width="75">
+                            <MenuItem Header="Ariel" Click="Ariel_Click" />
+                            <MenuItem Header="Calibri" Click="Calibri_Click" />
+                            <MenuItem Header="T.N.R." Click="TNR_Click"/>
+                            <MenuItem Header="Comic Sans" Click="Full_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="Highlight" Height="23" Width="75">
+                            <MenuItem Header="None" Click="None_Click"/>
+                            <MenuItem Header="Quarter" Click="Quarter_Click"/>
+                            <MenuItem Header="Half" Click="Quarter_Click"/>
+                            <MenuItem Header="3/4" Click="ThreeFour_Click"/>
+                            <MenuItem Header="Full" Click="Full_Click"/>
+                        </MenuItem>
                     </Menu>
-                    <Rectangle Name="DropSpace" AllowDrop="True" Grid.Column="1" Fill="Red" HorizontalAlignment="Left" Height="100" Margin="183,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" DragEnter="DropSpace_DragEnter" Drop="DropSpace_Drop"/>
-                    <Label Content=" DROP HERE" FontSize="15" Grid.Column="1" HorizontalAlignment="Left" Margin="183,40,0,0" VerticalAlignment="Top" Height="70" Width="100"/>
-                    <Image Name="TestImage" Stretch="Fill" HorizontalAlignment="Left" Height="100" Margin="379,278,0,0" VerticalAlignment="Top" Width="100"/>
+                    <Label Name="TestDrop" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="DROP HERE" Background="White" AllowDrop="True" Drop="TestDrop_Drop" DragEnter="TestDrop_DragEnter"  HorizontalAlignment="Left" Height="100" Margin="183,10,0,0"  VerticalAlignment="Top" Width="100" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="View" Name="viewTab">
-                <Grid Background="Beige">
-                    <Image HorizontalAlignment="Left" Height="388" VerticalAlignment="Top" Width="791" Margin="0,0,-9,0"/>
-                    <Label Name="OutputBox" FontSize="20" BorderThickness="2" BorderBrush="Black" Background="White" Content="Label" HorizontalAlignment="Left" Height="368"  VerticalAlignment="Top" Width="478" Margin="10,10,0,0" Grid.ColumnSpan="2"/>
-                    <Label Name="OutputBox1" FontSize="20" BorderThickness="2" BorderBrush="Black" Background="White" Content="Label" HorizontalAlignment="Left" Height="215" Margin="508,163,0,0" VerticalAlignment="Top" Width="264"/>
+                <Grid Background="Beige" Name="SaveMe">
+                    <Image x:Name="viewImage" Stretch="Fill" HorizontalAlignment="Left" Height="388" VerticalAlignment="Top" Width="782" />
+                    <TextBox Name="OutputBox" Background="White" Opacity="0" SelectionBrush="White" BorderBrush="Transparent" IsReadOnly="True" FontSize="20"  AcceptsTab="true" AcceptsReturn="True" HorizontalAlignment="Left" Height="368" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="478" Margin="10,10,0,0" Grid.RowSpan="2" SpellCheck.IsEnabled="True"/>
+                    <TextBox Name="OutputBox1" Background="White" Opacity="0" BorderBrush="Transparent" IsReadOnly="True" FontSize="20"  AcceptsTab="true" AcceptsReturn="True" HorizontalAlignment="Left" Height="215" Margin="508,163,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="264" TextDecorations="Underline" SpellCheck.IsEnabled="True"/>
+                    <Button x:Name="SaveScreen" Content="" Background="White" HorizontalAlignment="Left" Margin="672,10,0,0" VerticalAlignment="Top" Width="100" Height="100" Click="SaveScreen_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
