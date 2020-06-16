@@ -17,12 +17,17 @@ using System.IO;
 
 namespace PostcardGenerator
 {
+
     /// Postcard Generetor.
-    /// 
     /// 
     /// PG creates postcrads from user input in form of adding images utilizing drag and drop technology and editting texts with various settings.
     public partial class MainWindow : Window
     {
+        /// Operator Selector
+        /// 
+        /// Ech operation in the calculator tabitem has specific index, addition is 0, subtraction is 1 and so on.
+        int operation = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -62,7 +67,7 @@ namespace PostcardGenerator
             PngBitmapEncoder bitmapEncoder = new PngBitmapEncoder();
             bitmapEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
             /// Finally the image is saved on desktop.
-            using (Stream stm = File.Create("C:\\Users\\User\\Desktop\\" + fileName))
+            using (Stream stm = File.Create(fileName))
             {
                 bitmapEncoder.Save(stm);
             }
@@ -72,7 +77,7 @@ namespace PostcardGenerator
         /// Adds text to the View Screen.
         /// 
         /// The functions copies text from the work screen and adds it to the View screen.
-        private void AddText_Click(object sender, RoutedEventArgs e)
+        public void AddText_Click(object sender, RoutedEventArgs e)
         {
             OutputBox.Text = InputBox.Text;
             OutputBox1.Text = InputBox1.Text;
@@ -81,7 +86,7 @@ namespace PostcardGenerator
         /// 
         /// The function checks if the cursor had enterted the boundries of the control and if so changes it to represent that it allows files to be dropped.
         /// Otherwise the cursor remains the same.
-        private void TestDrop_DragEnter(object sender, DragEventArgs e)
+        public void TestDrop_DragEnter(object sender, DragEventArgs e)
         {
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -99,7 +104,7 @@ namespace PostcardGenerator
         /// 
         /// The function adds files to the background of View tab through drag-and-drop technology.
         /// @param files A string array to hold dropped images.
-        private void TestDrop_Drop(object sender, DragEventArgs e)
+        public void TestDrop_Drop(object sender, DragEventArgs e)
         {
             /// @note The file must be a non-null string.
             if (e.Data.GetDataPresent(DataFormats.FileDrop) &&
@@ -112,17 +117,17 @@ namespace PostcardGenerator
 
         /// Change Font.
         /// 
-        /// The function changes fonts of the text to Ariel font.
-        private void Ariel_Click(object sender, RoutedEventArgs e)
+        /// The function changes fonts of the text to Arial font.
+        public void Ariel_Click(object sender, RoutedEventArgs e)
         {
-            InputBox.FontFamily = new FontFamily("Ariel");
-            OutputBox.FontFamily = new FontFamily("Ariel");
+            InputBox.FontFamily = new FontFamily("Arial");
+            OutputBox.FontFamily = new FontFamily("Arial");
         }
 
         /// Change Font.
         /// 
         /// The function changes fonts of the text to Calibri font.
-        private void Calibri_Click(object sender, RoutedEventArgs e)
+        public void Calibri_Click(object sender, RoutedEventArgs e)
         {
             InputBox.FontFamily = new FontFamily("Calibri");
             OutputBox.FontFamily = new FontFamily("Calibri");
@@ -131,7 +136,7 @@ namespace PostcardGenerator
         /// Change Font.
         /// 
         /// The function changes fonts of the text to Times New Roman font.
-        private void TNR_Click(object sender, RoutedEventArgs e)
+        public void TNR_Click(object sender, RoutedEventArgs e)
         {
             InputBox.FontFamily = new FontFamily("Times New Roman");
             OutputBox.FontFamily = new FontFamily("Times New Roman");
@@ -140,69 +145,150 @@ namespace PostcardGenerator
         /// Change Font.
         /// 
         /// The function changes fonts of the text to Comis Sans font.
-        private void CS_Click(object sender, RoutedEventArgs e)
+        public void CS_Click(object sender, RoutedEventArgs e)
         {
-            InputBox.FontFamily = new FontFamily("Comic Sans");
-            OutputBox.FontFamily = new FontFamily("Comic Sans");
+            InputBox.FontFamily = new FontFamily("Comic Sans MS");
+            OutputBox.FontFamily = new FontFamily("Comic Sans MS");
         }
 
-        /// Text Visibility.
-        /// 
-        /// The function changes text background visibilty in the View tab to tranparent.
-        private void None_Click(object sender, RoutedEventArgs e)
-        {
-            OutputBox.Background = Brushes.Transparent;
-            OutputBox1.Background = Brushes.Transparent;
-            OutputBox.Opacity = 1;
-            OutputBox1.Opacity = 1;
-        }
-        /// Text Visibility.
-        /// 
-        /// The function changes text background visibilty in the View tab to a quarter visibility.
-        private void Quarter_Click(object sender, RoutedEventArgs e)
-        {
-            OutputBox.Background = Brushes.White;
-            OutputBox1.Background = Brushes.White;
-            OutputBox.Opacity = 0.25;
-            OutputBox1.Opacity = 0.25;
-        }
-        /// Text Visibility.
-        /// 
-        /// The function changes text background visibilty in the View tab to a half visibility.
-        private void Half_Click(object sender, RoutedEventArgs e)
-        {
-            OutputBox.Background = Brushes.White;
-            OutputBox1.Background = Brushes.White;
-            OutputBox.Opacity = 0.5;
-            OutputBox1.Opacity = 0.5;
-        }
-        /// Text Visibility.
-        /// 
-        /// The function changes text background visibilty in the View tab to a three quarters visibility.
-        private void ThreeFour_Click(object sender, RoutedEventArgs e)
-        {
-            OutputBox.Background = Brushes.White;
-            OutputBox1.Background = Brushes.White;
-            OutputBox.Opacity = 0.75;
-            OutputBox1.Opacity = 0.75;
-        }
-        /// Text Visibility.
-        /// 
-        /// The function changes text background visibilty in the View tab to full visibility.
-        private void Full_Click(object sender, RoutedEventArgs e)
-        {
-            OutputBox.Background = Brushes.White;
-            OutputBox1.Background = Brushes.White;
-            OutputBox.Opacity = 1;
-            OutputBox1.Opacity = 1;
-        }
+       
 
         /// Save Screenshot.
         /// 
         /// The function calls the CreateScreenshot(Visual, string) function passing the area of the postacard as the target and file name as fileName.
-        private void SaveScreen_Click(object sender, RoutedEventArgs e)
+        public void SaveScreen_Click(object sender, RoutedEventArgs e)
         {
             CreateScreenshot(SaveMe, "Postcard.png");
+        }
+
+        /// Change icon add.
+        /// 
+        /// Changes icon for calculator to addition.
+        public void PlusItem_Click(object sender, RoutedEventArgs e)
+        {
+            CalcType.Content = "+";
+            operation = 0;
+        }
+        /// Change icon subtract.
+        /// 
+        /// Changes icon for calculator to subtraction.
+        public void SubtItem_Click(object sender, RoutedEventArgs e)
+        {
+            CalcType.Content = "-";
+            operation = 1;
+        }
+        /// Change icon multiply.
+        /// 
+        /// Changes icon for calculator to multiplication.
+        public void MultipItem_Click(object sender, RoutedEventArgs e)
+        {
+            CalcType.Content = "*";
+            operation = 2;
+        }
+        /// Change icon divide.
+        /// 
+        /// Changes icon for calculator to divsion.
+        public void DivItem_Click(object sender, RoutedEventArgs e)
+        {
+            CalcType.Content = "/";
+            operation = 3;
+        }
+
+        /// Calculates the result based on the operation.
+        /// 
+        /// The function uses the switch to determine which type of calculation is being used per operation.
+        /// Then it checks if the parameter isn't a string with CanParse(string).
+        /// If it's not a string the function gives the result of the calculation.
+        /// If it is a string, it displays an error message.
+        /// @param operation
+        public void Calculate_Click(object sender, RoutedEventArgs e)
+        {
+            switch(operation)
+            {
+                case 0:
+                    {
+                        if (CanParse(Calc1.Text) && CanParse(Calc2.Text))
+                        {
+                            Eval.Text = "" + (double.Parse(Calc1.Text) + double.Parse(Calc2.Text));
+                            ErrorLabel.Content = "";
+                        }
+                        else
+                            ErrorLabel.Content = "Error: You used letters instead of numbers.";
+                        break;
+                    }
+                case 1:
+                    {
+                        if (CanParse(Calc1.Text) && CanParse(Calc2.Text))
+                        {
+                            Eval.Text = "" + (double.Parse(Calc1.Text) - double.Parse(Calc2.Text));
+                            ErrorLabel.Content = "";
+                        }
+                        else
+                            ErrorLabel.Content = "Error: You used letters instead of numbers.";
+                        break;
+                    }
+                case 2:
+                    {
+                        if (CanParse(Calc1.Text) && CanParse(Calc2.Text))
+                        {
+                            Eval.Text = "" + (double.Parse(Calc1.Text) * double.Parse(Calc2.Text));
+                            ErrorLabel.Content = "";
+                        }
+                        else
+                            ErrorLabel.Content = "Error: You used letters instead of numbers.";
+                        break;
+                    }
+                case 3:
+                    {
+                        if (CanParse(Calc1.Text) && CanParse(Calc2.Text))
+                        {
+                            Eval.Text = "" + (double.Parse(Calc1.Text) / double.Parse(Calc2.Text));
+                            ErrorLabel.Content = "";
+                        }
+                        else
+                            ErrorLabel.Content = "Error: You used letters instead of numbers.";
+                        break;
+                    }
+            }
+            
+        }
+
+        /// Cotinue function.
+        /// 
+        /// Sets the result of the calculation in the first textbox.
+        public void Continue_Click(object sender, RoutedEventArgs e)
+        {
+            Calc1.Text = Eval.Text;
+        }
+
+        /// Checks if zero.
+        /// 
+        /// The function checks if number given is zero, if it is it returns true, otherwise it returns false.
+        /// @returns bool
+        public static bool IsRight(double right)
+        {
+            if (right == 0)
+                return true;
+            else
+                return false;
+        }
+
+        /// Check if string.
+        /// 
+        /// The function checks whether the given string can be parsed into double.
+        /// If not, returns false.
+        /// @returns bool
+        public static bool CanParse(string str)
+        {
+            bool test = Double.TryParse(str, out double hold);
+            if (test)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
